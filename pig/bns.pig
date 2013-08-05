@@ -1,24 +1,30 @@
 REGISTER target/caissepop-1.2.jar;
 REGISTER pig/lib/commons-math3-3.2.jar;
-REGISTER pig/lib/lucene-*.jar.jar;
+REGISTER pig/lib/lucene-*.jar;
+
+%default MIN_COUNT 2
+%default MAX_VOCAB_SIZE 5000
+%default MIN_BNS_SCORE 0.00001
 
 DEFINE TokenizeText com.fujitsu.ca.fic.caissepop.evaluation.TokenizeText();
 DEFINE BNS com.fujitsu.ca.fic.caissepop.evaluation.ComputeBns();
 
-positiveDocs    = LOAD 'data/5docs' USING PigStorage('\n','-tagsource') 
+positiveDocs    = LOAD '$INPUT_POS' USING PigStorage('\n','-tagsource') 
                      AS (doc_id:chararray, text:chararray);
 
 posTokens = FOREACH positiveDocs GENERATE doc_id, 
              FLATTEN(TokenizeText(text)) 
              AS (token:chararray);
 posTokens = FILTER posTokens BY token MATCHES '\\w.*';
+posTokens = FILTER posTokens BY SIZE(token) > 1;
 
-negativeDocs = LOAD 'data/neg' USING PigStorage('\n','-tagsource') 
+negativeDocs = LOAD '$INPUT_NEG' USING PigStorage('\n','-tagsource') 
                      AS (doc_id:chararray, text:chararray);
 negTokens = FOREACH negativeDocs GENERATE doc_id, 
              FLATTEN(TokenizeText(text)) 
              AS (token:chararray);
 negTokens = FILTER negTokens BY token MATCHES '\\w.*';
+negTokens = FILTER negTokens BY SIZE(token) > 1;
 
 vocabUnion = UNION posTokens, negTokens;
 
@@ -35,22 +41,25 @@ negDocs = FOREACH (GROUP negDocs ALL)
     
  -- count the true positive and false positive counts for each vocabulary token
 posNegGrouped = COGROUP posTokens BY token, negTokens BY token;
-
  
-countsPipe = FOREACH posNegGrouped {
+bnsPipe = FOREACH posNegGrouped {
     posTokens = posTokens.token;
     negTokens = negTokens.token;
-    GENERATE group AS token, COUNT(posTokens) AS tp, posDocs.n_docs AS pos,
-    COUNT(negTokens) AS fp, negDocs.n_docs AS neg;
+    tp = COUNT(posTokens);
+    fp = COUNT(negTokens); 
+    all_count = (tp + fp);
+    GENERATE group AS token, 
+        BNS(tp, posDocs.n_docs, fp, negDocs.n_docs) as bns, 
+        all_count as all_count:long;
 }
-countsPipe = FILTER countsPipe BY tp + fp < 3;
+bnsPipe = FILTER bnsPipe BY all_count > $MIN_COUNT OR bns > $MIN_BNS_SCORE;
+bnsPipe = ORDER bnsPipe BY bns DESC;
+bnsPipe = LIMIT bnsPipe $MAX_VOCAB_SIZE;
 
-bnsScored = FOREACH countsPipe GENERATE token, BNS(tp,pos,fp,neg) AS bns, tp + fp as overall_count;   
-
-tokenScoredJoined = JOIN vocabUnion BY token, bnsScored BY token;
+tokenScoredJoined = JOIN vocabUnion BY token, bnsPipe BY token;
 tokenScoredGrouped = GROUP tokenScoredJoined BY doc_id;
 
-rmf $OUTPUT/out/bns-map
-rmf $OUTPUT/out/bns-docs-scored
-STORE bnsScored INTO '$OUTPUT/out/bns-map' USING PigStorage(',','schema');
-STORE tokenScoredGrouped INTO '$OUTPUT/out/bns-docs-scored' USING PigStorage(',','schema');
+rmf $OUTPUT/bns-map
+rmf $OUTPUT/bns-docs-scored
+STORE bnsPipe INTO '$OUTPUT/bns-map' USING PigStorage(',','schema');
+STORE tokenScoredGrouped INTO '$OUTPUT/bns-docs-scored' USING PigStorage(',','schema');
