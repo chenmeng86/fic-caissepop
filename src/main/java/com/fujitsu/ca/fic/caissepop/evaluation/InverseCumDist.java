@@ -8,6 +8,12 @@ import org.apache.pig.PigException;
 import org.apache.pig.backend.executionengine.ExecException;
 import org.apache.pig.data.Tuple;
 
+/**
+ * UDF that will lookup the value of the ratio of true positives to number of positives from the InverseCumulative distribution.
+ * 
+ * @author dumoulma
+ * 
+ */
 public class InverseCumDist extends EvalFunc<Double> {
     private static final double MIN_TPR_LIMIT = 0.0005;
     static final private NormalDistribution nd = new NormalDistribution();

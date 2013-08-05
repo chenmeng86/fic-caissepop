@@ -10,6 +10,18 @@ import org.slf4j.LoggerFactory;
 
 import com.fujitsu.ca.fic.caissepop.util.Util;
 
+/**
+ * Pig UDF that will compute the BNS (Bi-Normal Seperation) value of a token from the following values: tp, pos, fp and neg.
+ * <ul>
+ * <li>TP: count of documents within the positives examples where the term appears</li>
+ * <li>POS: the count of all positive documents</li>
+ * <li>TN: count of documents within the negatives examples where the term appears</li>
+ * <li>NEG: the count of all negative documents</li>
+ * </ul>
+ * 
+ * @author dumoulma
+ * 
+ */
 public class ComputeBns extends EvalFunc<Double> {
     private final Logger LOG = LoggerFactory.getLogger(ComputeTfIdf.class);
 

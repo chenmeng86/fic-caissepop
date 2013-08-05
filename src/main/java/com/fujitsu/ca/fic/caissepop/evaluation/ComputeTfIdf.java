@@ -9,6 +9,12 @@ import org.slf4j.LoggerFactory;
 
 import com.fujitsu.ca.fic.caissepop.util.Util;
 
+/**
+ * Pig UDF that will compute the TF-IDF value from the term frequency, document frequency and document count.
+ * 
+ * @author dumoulma
+ * 
+ */
 public class ComputeTfIdf extends EvalFunc<Double> {
     private final Logger LOG = LoggerFactory.getLogger(ComputeTfIdf.class);
 

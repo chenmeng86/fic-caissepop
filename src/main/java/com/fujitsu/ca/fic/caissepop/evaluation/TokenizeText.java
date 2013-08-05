@@ -32,18 +32,21 @@ import org.apache.pig.data.Tuple;
 import org.apache.pig.data.TupleFactory;
 
 /**
- * TokenizeText uses the Lucene libraries StandardAnalyzer class to tokenize a raw text input. A list of the stopwords used is available
- * {@link StopWords}. Output is a pig bag containing tokens.
+ * TokenizeText uses the Lucene libraries EnglishAnalyzer class to tokenize a raw text input.
  * 
  * <dt><b>Example:</b></dt> <dd><code>
  * register varaha.jar;<br/>
  * documents    = LOAD 'documents' AS (doc_id:chararray, text:chararray);<br/>
  * tokenized    = FOREACH documents GENERATE doc_id AS doc_id, FLATTEN(TokenizeText(text)) AS (token:chararray);
  * </code></dd> </dl>
+ * <p>
+ * NOTE: Upgrade to Version.LUCENE_44: Must call tokenStream.reset() before tokenStream.incrementToken() or will result in
+ * nullPointerException!
+ * </p>
+ * <i>Based on code by Jacob Perkins</i>
  * 
- * @see
- * @author Jacob Perkins
- * 
+ * @see org.apache.lucene.analysis.en.EnglishAnalyzer
+ * @author dumoulma
  */
 public class TokenizeText extends EvalFunc<DataBag> {
 
@@ -64,9 +67,6 @@ public class TokenizeText extends EvalFunc<DataBag> {
             StringReader textInput = new StringReader(lineOfText);
             tokenStream = analyzer.tokenStream(NOFIELD, textInput);
             CharTermAttribute termAttribute = tokenStream.getAttribute(CharTermAttribute.class);
-
-            // NOTE: Upgrading to Version.LUCENE_44, must call reset or incremetToken will
-            // throw nullPointerException!!!
             tokenStream.reset();
 
             while (tokenStream.incrementToken()) {
