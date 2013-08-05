@@ -13,7 +13,6 @@
 		<pig.version>0.11.1</pig.version>
 		<hadoop.version>1.1.2</hadoop.version>
 		<mahout.version>0.8</mahout.version>
-		<lucene.version>3.6.2</lucene.version>
 	</properties>
 
 	<build>
@@ -53,7 +52,12 @@
 		<dependency>
 			<groupId>org.apache.lucene</groupId>
 			<artifactId>lucene-analyzers</artifactId>
-			<version>${lucene.version}</version>
+			<version>3.6.2</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.lucene</groupId>
+			<artifactId>lucene-core</artifactId>
+			<version>4.4.0</version>
 		</dependency>
 		<dependency>
 			<groupId>org.slf4j</groupId>

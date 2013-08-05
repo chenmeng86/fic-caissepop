@@ -21,9 +21,9 @@ package com.fujitsu.ca.fic.caissepop.evaluation;
 import java.io.IOException;
 import java.io.StringReader;
 
-import org.apache.lucene.analysis.PorterStemFilter;
 import org.apache.lucene.analysis.TokenStream;
 import org.apache.lucene.analysis.en.EnglishAnalyzer;
+import org.apache.lucene.analysis.en.PorterStemFilter;
 import org.apache.lucene.analysis.tokenattributes.CharTermAttribute;
 import org.apache.lucene.util.Version;
 import org.apache.pig.EvalFunc;
@@ -51,7 +51,7 @@ public class TokenizeText extends EvalFunc<DataBag> {
     private static TupleFactory tupleFactory = TupleFactory.getInstance();
     private static BagFactory bagFactory = BagFactory.getInstance();
     private static String NOFIELD = "";
-    private static EnglishAnalyzer analyzer = new EnglishAnalyzer(Version.LUCENE_36);
+    private static EnglishAnalyzer analyzer = new EnglishAnalyzer(Version.LUCENE_44);
 
     @Override
     public DataBag exec(Tuple input) throws IOException {
