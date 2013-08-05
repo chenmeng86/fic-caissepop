@@ -1,6 +1,6 @@
 REGISTER target/caissepop-1.2.jar;
 REGISTER pig/lib/commons-math3-3.2.jar;
-REGISTER pig/lib/lucene-core-3.6.2.jar;
+REGISTER pig/lib/lucene-core-4.4.0.jar
 REGISTER pig/lib/lucene-analyzers-3.6.2.jar;
 
 DEFINE TokenizeText com.fujitsu.ca.fic.caissepop.evaluation.TokenizeText();
@@ -44,13 +44,14 @@ countsPipe = FOREACH posNegGrouped {
     GENERATE group AS token, COUNT(posTokens) AS tp, posDocs.n_docs AS pos,
     COUNT(negTokens) AS fp, negDocs.n_docs AS neg;
 }
+countsPipe = FILTER countsPipe BY tp + fp < 3;
 
-bnsScored = FOREACH countsPipe GENERATE token, BNS(tp,pos,fp,neg) AS bns;   
+bnsScored = FOREACH countsPipe GENERATE token, BNS(tp,pos,fp,neg) AS bns, tp + fp as overall_count;   
 
 tokenScoredJoined = JOIN vocabUnion BY token, bnsScored BY token;
 tokenScoredGrouped = GROUP tokenScoredJoined BY doc_id;
 
-rmf $OUTPUT/out/bns-map
-rmf $OUTPUT/out/bns-docs-scored
-STORE bnsScored INTO '$OUTPUT/out/bns-map' USING PigStorage(',','schema');
-STORE tokenScoredGrouped INTO '$OUTPUT/out/bns-docs-scored' USING PigStorage(',','schema');
+--rmf $OUTPUT/out/bns-map
+--rmf $OUTPUT/out/bns-docs-scored
+--STORE bnsScored INTO '$OUTPUT/out/bns-map' USING PigStorage(',','schema');
+--STORE tokenScoredGrouped INTO '$OUTPUT/out/bns-docs-scored' USING PigStorage(',','schema');

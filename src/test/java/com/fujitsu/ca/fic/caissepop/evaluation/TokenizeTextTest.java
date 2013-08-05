@@ -59,7 +59,7 @@ public class TokenizeTextTest {
             tokens.add(token);
         }
 
-        List<String> expected = Lists.newArrayList("alberta", "environ", "creat", "alberta", "environ", "support", "emerg", "respon",
+        List<String> expected = Lists.newArrayList("alberta", "environ", "creat", "alberta", "environ", "support", "emerg", "respons",
                 "team", "asert", "2006");
         assertTrue(tokens.containsAll(expected));
     }

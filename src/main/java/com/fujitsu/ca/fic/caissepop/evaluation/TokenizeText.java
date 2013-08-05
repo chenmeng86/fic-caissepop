@@ -23,7 +23,6 @@ import java.io.StringReader;
 
 import org.apache.lucene.analysis.TokenStream;
 import org.apache.lucene.analysis.en.EnglishAnalyzer;
-import org.apache.lucene.analysis.en.PorterStemFilter;
 import org.apache.lucene.analysis.tokenattributes.CharTermAttribute;
 import org.apache.lucene.util.Version;
 import org.apache.pig.EvalFunc;
@@ -61,11 +60,14 @@ public class TokenizeText extends EvalFunc<DataBag> {
         DataBag bagOfTokens = bagFactory.newDefaultBag();
         TokenStream tokenStream = null;
         try {
-
-            StringReader textInput = new StringReader(input.get(0).toString());
+            String lineOfText = input.get(0).toString();
+            StringReader textInput = new StringReader(lineOfText);
             tokenStream = analyzer.tokenStream(NOFIELD, textInput);
-            tokenStream = new PorterStemFilter(tokenStream);
             CharTermAttribute termAttribute = tokenStream.getAttribute(CharTermAttribute.class);
+
+            // NOTE: Upgrading to Version.LUCENE_44, must call reset or incremetToken will
+            // throw nullPointerException!!!
+            tokenStream.reset();
 
             while (tokenStream.incrementToken()) {
                 Tuple termText = tupleFactory.newTuple(termAttribute.toString());
