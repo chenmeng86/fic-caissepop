@@ -2,7 +2,7 @@
 The Alberta Department of Energy, Information Management and Technology Services Branch (IM&TS), Business Solutions Delivery, requires the services of:
 1 or more csharp Systems Analysts
 Provide application services within the Alberta Department of Energy. The Resource(s) will be responsible for development, maintenance, testing and support of applications and interfaces accessing desktop and web applications currently in use within the Alberta Department of Energy. Reporting to the Associate Director of Royalty/Tenure/Communication Applications, the Resource(s) will work under the direction and supervision of a Team Leader.
-The application environment consists of microcomputer applications running on Intel boxes utilizing Microsoft Windows NT Server, Windows 2003 or Windows XP Clients, csharp andMicrosoftSQL Server.
+The application environment consists of microcomputer applications running on Intel boxes utilizing Microsoft Windows NT Server, Windows 2003 or Windows XP Clients, csharp and Microsoft SQL Server.
 In general, key aspects of the role are:
 - Identifying and documenting client requirements and specifying resulting system changes;
 - Programming planned enhancements;
