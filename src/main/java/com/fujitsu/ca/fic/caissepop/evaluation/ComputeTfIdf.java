@@ -36,7 +36,7 @@ public class ComputeTfIdf extends EvalFunc<Double> {
         // (double) tf_count * LOG( (double) dPipe.n_docs / ( 1.0 + (double) df_count ) ) AS tfidf
         // Formula: tf * log ( nDocs/df)
         double tfidfScore = tfCount * Math.log(nDocs / (1.0 + dfCount));
-        LOG.info(String.format("tfCount: %d nDocs: %d dfCount: %d", tfCount, nDocs, dfCount));
+        LOG.debug(String.format("tfCount: %d nDocs: %d dfCount: %d", tfCount, nDocs, dfCount));
 
         return Util.round(tfidfScore, 5);
     }
