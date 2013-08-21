@@ -90,7 +90,6 @@ public class ScoreWithPerceptronTest {
     @Test
     public void testPerceptronModelLoadsFromConf() throws IOException {
         Perceptron p = new Perceptron(conf);
-        System.out.println(p);
 
         assertThat(p.toString().contains("alpha lengthSquared=300.0"), is(true));
     }
