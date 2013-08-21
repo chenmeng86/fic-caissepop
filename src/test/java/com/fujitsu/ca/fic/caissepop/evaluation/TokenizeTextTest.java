@@ -19,7 +19,7 @@ import static org.junit.Assert.assertTrue;
 public class TokenizeTextTest {
     @Test
     public void testGivenDirectoryWithOneDocShouldReturnTokenizedString() throws IOException, ParseException {
-        String[] params = {"INPUT=data/tok1", "OUTPUT=data/icd-out"};
+        String[] params = {"INPUT=data/test/tok1", "OUTPUT=data/out/test/TokenizeText"};
         PigTest pigTest = new PigTest("pig/tokenize-test.pig", params);
 
         String[] expected = {"(tokenize-1.txt,test)", "(tokenize-1.txt,sentenc)"};

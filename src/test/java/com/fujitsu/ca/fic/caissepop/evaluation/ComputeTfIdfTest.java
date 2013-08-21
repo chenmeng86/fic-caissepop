@@ -15,7 +15,7 @@ import static org.hamcrest.number.IsCloseTo.closeTo;
 public class ComputeTfIdfTest {
     @Test
     public void testGivenSomeCountsShouldReturnTfIdfValue() throws IOException, ParseException {
-        String[] params = {"INPUT=data/tfidf-1.txt", "OUTPUT=data/tfidf-out"};
+        String[] params = {"INPUT=data/test/tfidf-1.txt", "OUTPUT=data/out/test/tfidf"};
         String[] expected = {"(6.01986)"};
 
         PigTest pigTest = new PigTest("pig/compute_tfidf-test.pig", params);
@@ -25,7 +25,7 @@ public class ComputeTfIdfTest {
 
     @Test
     public void testGivenTfCountZeroShouldReturnZero() throws IOException, ParseException {
-        String[] params = {"INPUT=data/tfidf-2.txt", "OUTPUT=data/icd-out"};
+        String[] params = {"INPUT=data/test/tfidf-2.txt", "OUTPUT=data/out/test/tfidf2"};
         String[] expected = {"(0.0)"};
 
         PigTest pigTest = new PigTest("pig/compute_tfidf-test.pig", params);

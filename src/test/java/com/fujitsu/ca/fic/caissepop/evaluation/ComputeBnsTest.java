@@ -16,7 +16,7 @@ public class ComputeBnsTest {
 
     @Test
     public void testGivenEqualTpAndTnCountsShouldReturnZero() throws IOException, ParseException {
-        String[] params = {"INPUT=data/bns-1.txt", "OUTPUT=data/bns-out"};
+        String[] params = {"INPUT=data/test/bns-1.txt", "OUTPUT=data/out/test/bns"};
         String[] expected = {"(0.0)"};
 
         PigTest pigTest = new PigTest("pig/compute_bns-test.pig", params);
@@ -26,7 +26,7 @@ public class ComputeBnsTest {
 
     @Test
     public void testGiven10CountsShouldReturnCorrect10BnsValues() throws IOException, ParseException {
-        String[] params = {"INPUT=data/bns-10.txt", "OUTPUT=data/icd-out"};
+        String[] params = {"INPUT=data/test/bns-10.txt", "OUTPUT=data/out/test/bns2"};
         String[] expected = {"(6.58105)", "(2.5631)", "(1.68324)", "(1.0488)", "(0.50669)", "(0.0)", "(0.50669)", "(1.0488)", "(1.68324)",
                 "(2.5631)", "(6.58105)"};
 

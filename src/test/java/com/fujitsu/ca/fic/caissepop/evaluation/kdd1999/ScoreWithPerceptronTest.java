@@ -43,7 +43,7 @@ public class ScoreWithPerceptronTest {
 
     @BeforeClass
     public static void beforeClass() {
-        conf.set("perceptron.model.path", "model/perceptron.model");
+        conf.set("perceptron.model.path", "data/test/model/perceptron.model");
     }
 
     @Test
@@ -92,7 +92,7 @@ public class ScoreWithPerceptronTest {
         Perceptron p = new Perceptron(conf);
         System.out.println(p);
 
-        assertThat(p.toString().contains("alpha lengthSquared=1000.0"), is(true));
+        assertThat(p.toString().contains("alpha lengthSquared=300.0"), is(true));
     }
 
     private List<Double> toDoubleList(String line) {
