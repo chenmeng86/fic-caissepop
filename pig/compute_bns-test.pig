@@ -1,4 +1,4 @@
-REGISTER target/caissepop-1.2.jar;
+REGISTER pig/lib/caissepop-1.2.jar;
 REGISTER pig/lib/commons-math3-3.2.jar;
 
 DEFINE BNS com.fujitsu.ca.fic.caissepop.evaluation.ComputeBns();

@@ -1,4 +1,4 @@
-REGISTER target/caissepop-1.2.jar;
+REGISTER pig/lib/caissepop-1.2.jar;
 REGISTER pig/lib/lucene-*.jar;
 
 define TokenizeText com.fujitsu.ca.fic.caissepop.evaluation.TokenizeText();

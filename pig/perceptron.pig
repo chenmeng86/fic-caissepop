@@ -1,9 +1,9 @@
-%default DATA_DIR ../data/10vectors
-%default OUTPUT_DIR ../data/perceptron-pig-output
+%default DATA_DIR data/test/kdd1999/10vectors
+%default OUTPUT_DIR data/out/perceptron-pig
 
-REGISTER '../target/mltp2udf-1.12.jar';
-REGISTER 'lib/mahout-math-0.7.jar';
-REGISTER 'lib/mahout-core-0.7.jar';
+REGISTER pig/lib/fic-caissepop-*.jar;
+REGISTER pig/lib/mahout-math-0.7.jar;
+REGISTER pig/lib/mahout-core-0.7.jar;
 
 DEFINE SCORE_WITH_PERCEPTRON ca.ulaval.ift7002.tp2.udf.ScoreWithPerceptron();
 DEFINE VECTORIZE_SERVICE ca.ulaval.ift7002.tp2.udf.VectorizeService();
@@ -11,7 +11,7 @@ DEFINE VECTORIZE_PROTOCOL_TYPE ca.ulaval.ift7002.tp2.udf.VectorizeProtocolType()
 DEFINE VECTORIZE_FLAG ca.ulaval.ift7002.tp2.udf.VectorizeFlag();
 DEFINE VECTORIZE_LABEL ca.ulaval.ift7002.tp2.udf.VectorizeBinaryLabel();
 
-set perceptron.model.path '../model/perceptron.model'
+set perceptron.model.path 'data/test/model/perceptron.model'
 
 rmf $OUTPUT_DIR
 
