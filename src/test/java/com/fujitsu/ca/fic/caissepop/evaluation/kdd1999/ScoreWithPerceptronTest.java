@@ -36,14 +36,14 @@ public class ScoreWithPerceptronTest {
     private final String goodLineOfData = "1,0,1,12,1,146,38132,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,2,20,0.0,0.0,0.0,0.0,1.0,0.0,0.2,255.0,255.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0";
     private final String lineOfDataWithIncorrectNumberOfFields = "0,3,22,1,1032,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,511,511,0.0,0.0,0.0,0.0,1.0,0.0,0.0,255.0,255.0,1.0,0.0,1.0,0.0,0.0,0.0,0.0,0.0";
 
-    private static final Configuration conf = new Configuration();
+    private static final Configuration CONF = new Configuration();
 
     @Mock
-    Perceptron perceptronMock;
+    private Perceptron perceptronMock;
 
     @BeforeClass
     public static void beforeClass() {
-        conf.set("perceptron.model.path", "data/test/model/perceptron.model");
+        CONF.set("perceptron.model.path", "data/test/model/perceptron.model");
     }
 
     @Test
@@ -66,7 +66,7 @@ public class ScoreWithPerceptronTest {
     public void testExecWithPerceptronReturnsDouble() throws IOException {
         TupleFactory tupleFactory = TupleFactory.getInstance();
         ScoreWithPerceptron scorer = new ScoreWithPerceptron();
-        scorer.setConf(conf);
+        scorer.setConf(CONF);
 
         List<Double> list = toDoubleList(goodLineOfData);
         Tuple testTuple = tupleFactory.newTuple(list);
@@ -81,7 +81,7 @@ public class ScoreWithPerceptronTest {
     public void testWithIncorrectlyFormattedDataShouldThrow() throws IOException {
         TupleFactory tupleFactory = TupleFactory.getInstance();
         ScoreWithPerceptron scorer = new ScoreWithPerceptron();
-        scorer.setConf(conf);
+        scorer.setConf(CONF);
 
         Tuple testTuple = tupleFactory.newTuple(toDoubleList(lineOfDataWithIncorrectNumberOfFields));
         scorer.exec(testTuple);
@@ -89,7 +89,7 @@ public class ScoreWithPerceptronTest {
 
     @Test
     public void testPerceptronModelLoadsFromConf() throws IOException {
-        Perceptron p = new Perceptron(conf);
+        Perceptron p = new Perceptron(CONF);
 
         assertThat(p.toString().contains("alpha lengthSquared=300.0"), is(true));
     }

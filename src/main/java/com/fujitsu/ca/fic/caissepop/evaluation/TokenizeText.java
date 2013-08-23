@@ -52,20 +52,21 @@ public class TokenizeText extends EvalFunc<DataBag> {
 
     private static TupleFactory tupleFactory = TupleFactory.getInstance();
     private static BagFactory bagFactory = BagFactory.getInstance();
-    private static String NOFIELD = "";
+    private static String noField = "";
     private static EnglishAnalyzer analyzer = new EnglishAnalyzer(Version.LUCENE_44);
 
     @Override
     public DataBag exec(Tuple input) throws IOException {
-        if (input == null || input.size() < 1 || input.isNull(0))
+        if (input == null || input.size() < 1 || input.isNull(0)) {
             return null;
+        }
 
         DataBag bagOfTokens = bagFactory.newDefaultBag();
         TokenStream tokenStream = null;
         try {
             String lineOfText = input.get(0).toString();
             StringReader textInput = new StringReader(lineOfText);
-            tokenStream = analyzer.tokenStream(NOFIELD, textInput);
+            tokenStream = analyzer.tokenStream(noField, textInput);
             CharTermAttribute termAttribute = tokenStream.getAttribute(CharTermAttribute.class);
             tokenStream.reset();
 
@@ -75,8 +76,9 @@ public class TokenizeText extends EvalFunc<DataBag> {
                 termAttribute.setEmpty();
             }
         } finally {
-            if (tokenStream != null)
+            if (tokenStream != null) {
                 tokenStream.close();
+            }
         }
         return bagOfTokens;
     }

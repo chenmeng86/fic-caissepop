@@ -123,8 +123,9 @@ public class Perceptron extends AbstractVectorClassifier {
         sb.append("alpha: ");
         for (int i = 0; i < alpha.size(); i++) {
             Element element = alpha.getElement(i);
-            if (element.get() != 0.0)
+            if (element.get() != 0.0) {
                 sb.append(i + ":" + element.get() + ", ");
+            }
         }
         sb.append("\n");
         sb.append("Gamma=" + gamma + "\n");
