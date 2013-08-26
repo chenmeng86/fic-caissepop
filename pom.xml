@@ -4,7 +4,7 @@
 
 	<groupId>com.fujitsu.ca.fic</groupId>
 	<artifactId>caissepop</artifactId>
-	<version>1.2</version>
+	<version>1.21</version>
 
 	<name>caissepop</name>
 
@@ -62,6 +62,11 @@
 	</build>
 	<reporting>
 		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-project-info-reports-plugin</artifactId>
+				<version>2.7</version>
+			</plugin>
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>cobertura-maven-plugin</artifactId>

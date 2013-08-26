@@ -1,4 +1,4 @@
-REGISTER pig/lib/caissepop-1.2.jar;
+REGISTER pig/lib/caissepop-1.2*.jar;
 REGISTER pig/lib/lucene-core-4.4.0.jar
 REGISTER pig/lib/lucene-analyzers-3.6.2.jar;
 

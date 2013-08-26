@@ -1,4 +1,4 @@
-REGISTER pig/lib/caissepop-1.2.jar;
+REGISTER pig/lib/caissepop-1.2*.jar;
 
 DEFINE ComputeTfIdf com.fujitsu.ca.fic.caissepop.evaluation.ComputeTfIdf();
 
