@@ -40,8 +40,8 @@ import org.apache.pig.data.TupleFactory;
  * tokenized    = FOREACH documents GENERATE doc_id AS doc_id, FLATTEN(TokenizeText(text)) AS (token:chararray);
  * </code></dd> </dl>
  * <p>
- * NOTE: Upgrade to Version.LUCENE_44: Must call tokenStream.reset() before tokenStream.incrementToken() or will result in
- * nullPointerException!
+ * NOTE: Upgrade to Version.LUCENE_44: Must call tokenStream.reset() before tokenStream.incrementToken() 
+ * or will result in nullPointerException!
  * </p>
  * <i>Based on code by Jacob Perkins</i>
  * 

@@ -16,6 +16,7 @@ import datafu.pig.util.SimpleEvalFunc;
  * 
  */
 public class InverseCumDist extends SimpleEvalFunc<Double> {
+	private static final int PRECISION = 5;
 	private static final NormalDistribution NORMAL_DISTRIBUTION = new NormalDistribution();
 	private static final double MIN_TPR_LIMIT = 0.0005;
 
@@ -36,6 +37,6 @@ public class InverseCumDist extends SimpleEvalFunc<Double> {
 		}
 
 		return Util.round(
-				NORMAL_DISTRIBUTION.inverseCumulativeProbability(tpr), 5);
+				NORMAL_DISTRIBUTION.inverseCumulativeProbability(tpr), PRECISION);
 	}
 }

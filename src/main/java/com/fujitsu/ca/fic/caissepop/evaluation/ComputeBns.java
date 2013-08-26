@@ -24,6 +24,7 @@ import datafu.pig.util.SimpleEvalFunc;
  * 
  */
 public class ComputeBns extends SimpleEvalFunc<Double> {
+	private static final int PRECISION = 5;
 	private final Logger log = LoggerFactory.getLogger(ComputeTfIdf.class);
 
 	public Double call(Long tp, Long pos, Long fp, Long neg) {
@@ -31,7 +32,7 @@ public class ComputeBns extends SimpleEvalFunc<Double> {
 				.abs(computeFminus1(tp, pos) - computeFminus1(fp, neg));
 		log.debug("BNS score is: " + bns);
 
-		return Util.round(bns, 5);
+		return Util.round(bns, PRECISION);
 	}
 
 	private static final double MIN_TPR_LIMIT = 0.0005;

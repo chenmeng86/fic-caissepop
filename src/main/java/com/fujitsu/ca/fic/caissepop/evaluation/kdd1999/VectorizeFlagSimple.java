@@ -3,8 +3,6 @@ package com.fujitsu.ca.fic.caissepop.evaluation.kdd1999;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.pig.PigException;
-import org.apache.pig.backend.executionengine.ExecException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -16,22 +14,20 @@ public class VectorizeFlagSimple extends SimpleEvalFunc<Integer> {
 	private static final String[] FLAG_NAMES = { "SF", "S0", "S1", "S2", "S3",
 			"OTH", "REJ", "RSTO", "RSTR", "RSTOS0", "SH", "RSTRH", "SHR",
 			"RESTR_FLAG" };
+	private static final int UNKNOWN = -1;
 
-	private static final Map<String, Integer> flags = new HashMap<String, Integer>();
+	private static final Map<String, Integer> FLAGS_MAP = new HashMap<String, Integer>();
 	{
 		for (int i = 0; i < FLAG_NAMES.length; i++) {
-			flags.put(FLAG_NAMES[i], i);
+			FLAGS_MAP.put(FLAG_NAMES[i], i);
 		}
 	}
 
-	public Integer call(String flagField) throws ExecException {
-		if (flagField == null)
-			return null;
-		if (!flags.containsKey(flagField)) {
-			log.warn(flagField + " is an unknown value for the flag field");
-			throw new ExecException("Flag Type unknown value: " + flagField,
-					PigException.INPUT);
+	public Integer call(String flagField) {
+		if (!FLAGS_MAP.containsKey(flagField)) {
+			log.warn("Unknown flag field value: " + flagField);
+			return UNKNOWN;
 		}
-		return flags.get(flagField);
+		return FLAGS_MAP.get(flagField);
 	}
 }

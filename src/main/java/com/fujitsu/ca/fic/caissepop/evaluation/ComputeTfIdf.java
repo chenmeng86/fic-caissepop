@@ -18,6 +18,7 @@ import datafu.pig.util.SimpleEvalFunc;
  * 
  */
 public class ComputeTfIdf extends SimpleEvalFunc<Double> {
+	private static final int PRECISION = 5;
 	private final Logger log = LoggerFactory.getLogger(ComputeTfIdf.class);
 
 	public Double call(Long tfCount, Long nDocs, Long dfCount) {
@@ -25,6 +26,6 @@ public class ComputeTfIdf extends SimpleEvalFunc<Double> {
 		log.debug(String.format("tfCount: %d nDocs: %d dfCount: %d", tfCount,
 				nDocs, dfCount));
 
-		return Util.round(tfidfScore, 5);
+		return Util.round(tfidfScore, PRECISION);
 	}
 }

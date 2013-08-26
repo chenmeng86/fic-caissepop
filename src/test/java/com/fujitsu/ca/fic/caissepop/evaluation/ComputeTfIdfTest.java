@@ -35,7 +35,7 @@ public class ComputeTfIdfTest {
 
     @Test
     public void testEvalFunc() throws IOException {
-        final double ERROR = 0.2;
+		final double errorMargin = 0.2;
         ComputeTfIdf udfClass = new ComputeTfIdf();
         Tuple input = TupleFactory.getInstance().newTuple();
         input.append(5L);
@@ -44,6 +44,6 @@ public class ComputeTfIdfTest {
 
         Double tfidf = udfClass.exec(input);
 
-        assertThat(tfidf, closeTo(6.0, ERROR));
+        assertThat(tfidf, closeTo(6.0, errorMargin));
     }
 }

@@ -17,10 +17,10 @@ public class VectorizeFlag extends EvalFunc<Integer> {
 			"OTH", "REJ", "RSTO", "RSTR", "RSTOS0", "SH", "RSTRH", "SHR",
 			"RESTR_FLAG" };
 
-	private static final Map<String, Integer> flags = new HashMap<String, Integer>();
+	private static final Map<String, Integer> FLAGS_MAP = new HashMap<String, Integer>();
 	{
 		for (int i = 0; i < FLAG_NAMES.length; i++) {
-			flags.put(FLAG_NAMES[i], i);
+			FLAGS_MAP.put(FLAG_NAMES[i], i);
 		}
 	}
 
@@ -36,10 +36,10 @@ public class VectorizeFlag extends EvalFunc<Integer> {
 		}
 
 		String flagString = (String) input.get(0);
-		if (!flags.containsKey(flagString)) {
+		if (!FLAGS_MAP.containsKey(flagString)) {
 			throw new ExecException("Flag Type unknown value: " + flagString,
 					PigException.INPUT);
 		}
-		return flags.get(flagString);
+		return FLAGS_MAP.get(flagString);
 	}
 }
