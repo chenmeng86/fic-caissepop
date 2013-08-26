@@ -33,8 +33,8 @@ import static org.mockito.Mockito.when;
 @RunWith(MockitoJUnitRunner.class)
 public class ScoreWithPerceptronTest {
     private static final int FIELDS = 42;
-    private final String goodLineOfData = "1,0,1,12,1,146,38132,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,2,20,0.0,0.0,0.0,0.0,1.0,0.0,0.2,255.0,255.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0";
-    private final String lineOfDataWithIncorrectNumberOfFields = "0,3,22,1,1032,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,511,511,0.0,0.0,0.0,0.0,1.0,0.0,0.0,255.0,255.0,1.0,0.0,1.0,0.0,0.0,0.0,0.0,0.0";
+    private static final String goodLineOfData = "1,0,1,12,1,146,38132,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,2,20,0.0,0.0,0.0,0.0,1.0,0.0,0.2,255.0,255.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0";
+    private static final String lineOfDataWithIncorrectNumberOfFields = "0,3,22,1,1032,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,511,511,0.0,0.0,0.0,0.0,1.0,0.0,0.0,255.0,255.0,1.0,0.0,1.0,0.0,0.0,0.0,0.0,0.0";
 
     private static final Configuration CONF = new Configuration();
 
