@@ -12,21 +12,21 @@ public class VectorizeFlag extends SimpleEvalFunc<Integer> {
     private static final Logger LOG = LoggerFactory.getLogger(VectorizeFlag.class);
 
     private static final String[] FLAG_NAMES = { "SF", "S0", "S1", "S2", "S3", "OTH", "REJ",
-            "RSTO", "RSTR", "RSTOS0", "SH", "RSTRH", "SHR", "RESTR_FLAG" };
+	    "RSTO", "RSTR", "RSTOS0", "SH", "RSTRH", "SHR", "RESTR_FLAG" };
     private static final int UNKNOWN = -1;
 
     private static final Map<String, Integer> FLAGS_MAP = new HashMap<String, Integer>();
     {
-        for (int i = 0; i < FLAG_NAMES.length; i++) {
-            FLAGS_MAP.put(FLAG_NAMES[i], i);
-        }
+	for (int i = 0; i < FLAG_NAMES.length; i++) {
+	    FLAGS_MAP.put(FLAG_NAMES[i], i);
+	}
     }
 
     public Integer call(String flagField) {
-        if (!FLAGS_MAP.containsKey(flagField)) {
-            LOG.warn("Unknown flag field value: " + flagField);
-            return UNKNOWN;
-        }
-        return FLAGS_MAP.get(flagField);
+	if (!FLAGS_MAP.containsKey(flagField)) {
+	    LOG.warn("Unknown flag field value: " + flagField);
+	    return UNKNOWN;
+	}
+	return FLAGS_MAP.get(flagField);
     }
 }

@@ -1,28 +1,11 @@
 package com.fujitsu.ca.fic.caissepop.evaluation.kdd1999;
 
-import java.io.IOException;
+import datafu.pig.util.SimpleEvalFunc;
 
-import org.apache.pig.EvalFunc;
-import org.apache.pig.data.Tuple;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-public class VectorizeBinaryLabel extends EvalFunc<Integer> {
-    private static final Logger LOG = LoggerFactory.getLogger(VectorizeBinaryLabel.class);
+public class VectorizeBinaryLabel extends SimpleEvalFunc<Integer> {
     private static final String NORMAL_TYPE = "normal";
 
-    @Override
-    public Integer exec(Tuple input) throws IOException {
-        if (input == null) {
-            LOG.warn("input is null!");
-            return null;
-        }
-        if (input.size() != 1 || input.isNull(0)) {
-            LOG.warn("Unexpected input Tuple size: " + input.size());
-            return null;
-        }
-
-        String label = (String) input.get(0);
-        return label.equalsIgnoreCase(NORMAL_TYPE) ? 1 : 0;
+    public Integer call(String label) {
+	return label.equalsIgnoreCase(NORMAL_TYPE) ? 1 : 0;
     }
 }
