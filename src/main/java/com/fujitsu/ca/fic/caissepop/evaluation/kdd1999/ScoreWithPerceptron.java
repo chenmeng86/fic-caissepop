@@ -17,7 +17,7 @@ import org.slf4j.LoggerFactory;
 import com.fujitsu.ca.fic.classifier.perceptron.Perceptron;
 
 public class ScoreWithPerceptron extends EvalFunc<Double> {
-    private final Logger log = LoggerFactory.getLogger(ScoreWithPerceptron.class);
+    private static final Logger LOG = LoggerFactory.getLogger(ScoreWithPerceptron.class);
 
     private Perceptron perceptron;
     private static final int FIELDS = 42;
@@ -28,11 +28,11 @@ public class ScoreWithPerceptron extends EvalFunc<Double> {
     @Override
     public Double exec(Tuple input) throws IOException {
         if (input == null) {
-            log.warn("input is null!");
+            LOG.warn("input is null!");
             return null;
         }
         if (input.size() != FIELDS) {
-            log.warn("Unexpected input Tuple size: " + input.size());
+            LOG.warn("Unexpected input Tuple size: " + input.size());
             return null;
         }
 

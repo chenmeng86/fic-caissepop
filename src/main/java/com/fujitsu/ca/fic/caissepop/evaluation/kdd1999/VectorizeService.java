@@ -12,7 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class VectorizeService extends EvalFunc<Integer> {
-    private final Logger log = LoggerFactory.getLogger(VectorizeService.class);
+    private static final Logger LOG = LoggerFactory.getLogger(VectorizeService.class);
     private static final String[] SERVICES_NAMES = { "bgp", "ctf", "efs", "ftp", "irc", "mtp",
             "rje", "ssh", "x11", "auth", "echo", "exec", "http", "ldap", "link", "name", "nnsp",
             "nntp", "smtp", "time", "uucp", "eco_i", "ecr_i", "imap4", "login", "ntp_u", "other",
@@ -34,11 +34,11 @@ public class VectorizeService extends EvalFunc<Integer> {
     @Override
     public Integer exec(Tuple input) throws IOException {
         if (input == null) {
-            log.warn("input is null!");
+            LOG.warn("input is null!");
             return null;
         }
         if (input.size() != 1 || input.isNull(0)) {
-            log.warn("Unexpected input Tuple size: " + input.size());
+            LOG.warn("Unexpected input Tuple size: " + input.size());
             return null;
         }
 

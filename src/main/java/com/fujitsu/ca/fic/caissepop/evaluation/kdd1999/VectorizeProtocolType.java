@@ -10,7 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class VectorizeProtocolType extends EvalFunc<Integer> {
-    private final Logger log = LoggerFactory.getLogger(VectorizeProtocolType.class);
+    private static final Logger LOG = LoggerFactory.getLogger(VectorizeProtocolType.class);
     private static final String TCP_TYPE = "tcp";
     private static final String UDP_TYPE = "udp";
     private static final String ICMP_TYPC = "icmp";
@@ -18,11 +18,11 @@ public class VectorizeProtocolType extends EvalFunc<Integer> {
     @Override
     public Integer exec(Tuple input) throws IOException {
         if (input == null) {
-            log.warn("input is null!");
+            LOG.warn("input is null!");
             return null;
         }
         if (input.size() != 1 || input.isNull(0)) {
-            log.warn("Unexpected input Tuple size: " + input.size());
+            LOG.warn("Unexpected input Tuple size: " + input.size());
             return null;
         }
 

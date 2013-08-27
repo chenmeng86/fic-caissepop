@@ -13,7 +13,7 @@ import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 public final class VectorizeFlagSimpleTest {
-    private final VectorizeFlagSimple vectorizer = new VectorizeFlagSimple();
+    private final VectorizeFlag vectorizer = new VectorizeFlag();
 
     @Test
     public void givenTokenSFShouldReturnZero() throws IOException {

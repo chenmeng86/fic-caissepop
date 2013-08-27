@@ -8,17 +8,17 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class VectorizeBinaryLabel extends EvalFunc<Integer> {
-    private final Logger log = LoggerFactory.getLogger(VectorizeBinaryLabel.class);
+    private static final Logger LOG = LoggerFactory.getLogger(VectorizeBinaryLabel.class);
     private static final String NORMAL_TYPE = "normal";
 
     @Override
     public Integer exec(Tuple input) throws IOException {
         if (input == null) {
-            log.warn("input is null!");
+            LOG.warn("input is null!");
             return null;
         }
         if (input.size() != 1 || input.isNull(0)) {
-            log.warn("Unexpected input Tuple size: " + input.size());
+            LOG.warn("Unexpected input Tuple size: " + input.size());
             return null;
         }
 
