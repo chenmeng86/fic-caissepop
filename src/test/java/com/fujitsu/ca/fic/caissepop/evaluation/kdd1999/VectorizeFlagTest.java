@@ -12,38 +12,38 @@ import static org.hamcrest.CoreMatchers.nullValue;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 
-public class VectorizeFlagTest {
+public final class VectorizeFlagTest {
     private final VectorizeFlag vectorizer = new VectorizeFlag();
 
     @Test
     public void givenTokenSFShouldReturnZero() throws IOException {
-        Tuple input = TupleFactory.getInstance().newTuple();
-        input.append("SF");
+	Tuple input = TupleFactory.getInstance().newTuple();
+	input.append("SF");
 
-        Integer value = vectorizer.exec(input);
-        assertThat(value, equalTo(0));
+	Integer value = vectorizer.exec(input);
+	assertThat(value, equalTo(0));
     }
 
     @Test
     public void givenNullTokenShouldReturnNull() throws IOException {
-        Integer value = vectorizer.exec(null);
-        assertThat(value, is(nullValue()));
+	Integer value = vectorizer.exec(null);
+	assertThat(value, is(nullValue()));
+    }
+
+    @Test(expected = IOException.class)
+    public void givenTupleWithIncorrectSizeShouldThrowException() throws IOException {
+	Tuple input = TupleFactory.getInstance().newTuple();
+	input.append("1");
+	input.append("2");
+	vectorizer.exec(input);
     }
 
     @Test
-    public void givenTupleWithIncorrectSizeShouldReturnNull() throws IOException {
-        Tuple input = TupleFactory.getInstance().newTuple();
-        input.append("1");
-        input.append("2");
-        Integer value = vectorizer.exec(input);
-        assertThat(value, is(nullValue()));
+    public void givenTupleWithNullContentShouldReturnUnknownValue() throws IOException {
+	Tuple input = TupleFactory.getInstance().newTuple();
+	input.append(null);
+	Integer value = vectorizer.exec(input);
+	assertThat(value, equalTo(-1));
     }
 
-    @Test
-    public void givenTupleWithNullContentShouldReturnNull() throws IOException {
-        Tuple input = TupleFactory.getInstance().newTuple();
-        input.append(null);
-        Integer value = vectorizer.exec(input);
-        assertThat(value, is(nullValue()));
-    }
 }
