@@ -32,82 +32,79 @@ import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class ScoreWithPerceptronTest {
-	private static final int FIELDS = 42;
-	private static final String DATA = "1,0,1,12,1,146,38132,0,0,0,0,0,"
-			+ "1,0,0,0,0,0,0,0,0,0,0,2,20,0.0,0.0, 0.0,0.0,1.0,0.0,0.2,"
-			+ "255.0,255.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0";
-	private static final String BAD_DATA = "0,3,22,1,1032,0,0,0,0,0,0,0,"
-			+ "0,0,0,0,0,0,0,0,0,0,511,511,0.0,0.0,0.0,0.0,1.0,0.0,0.0,"
-			+ "255.0,255.0,1.0,0.0,1.0,0.0,0.0,0.0,0.0,0.0";
+    private static final int FIELDS = 42;
+    private static final String DATA = "1,0,1,12,1,146,38132,0,0,0,0,0,"
+            + "1,0,0,0,0,0,0,0,0,0,0,2,20,0.0,0.0, 0.0,0.0,1.0,0.0,0.2,"
+            + "255.0,255.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0";
+    private static final String BAD_DATA = "0,3,22,1,1032,0,0,0,0,0,0,0,"
+            + "0,0,0,0,0,0,0,0,0,0,511,511,0.0,0.0,0.0,0.0,1.0,0.0,0.0,"
+            + "255.0,255.0,1.0,0.0,1.0,0.0,0.0,0.0,0.0,0.0";
 
-	private static final Configuration CONF = new Configuration();
+    private static final Configuration CONF = new Configuration();
 
-	@Mock
-	private Perceptron perceptronMock;
+    @Mock
+    private Perceptron perceptronMock;
 
-	@BeforeClass
-	public static void beforeClass() {
-		CONF.set("perceptron.model.path", "data/test/model/perceptron.model");
-	}
+    @BeforeClass
+    public static void beforeClass() {
+        CONF.set("perceptron.model.path", "data/test/model/perceptron.model");
+    }
 
-	@Test
-	public void testExecWithMockPerceptron() throws Exception {
-		TupleFactory tupleFactory = TupleFactory.getInstance();
-		ScoreWithPerceptron scorer = new ScoreWithPerceptron();
+    @Test
+    public void testExecWithMockPerceptron() throws Exception {
+        TupleFactory tupleFactory = TupleFactory.getInstance();
+        ScoreWithPerceptron scorer = new ScoreWithPerceptron();
 
-		when(perceptronMock.classifyScalar((Vector) anyObject())).thenReturn(
-				new Double(1.0));
-		scorer.setPerceptron(perceptronMock);
-		Tuple testTuple = tupleFactory.newTuple(toDoubleList(DATA));
+        when(perceptronMock.classifyScalar((Vector) anyObject())).thenReturn(new Double(1.0));
+        scorer.setPerceptron(perceptronMock);
+        Tuple testTuple = tupleFactory.newTuple(toDoubleList(DATA));
 
-		assertThat(testTuple.size(), equalTo(FIELDS));
+        assertThat(testTuple.size(), equalTo(FIELDS));
 
-		Double confidenceScore = scorer.exec(testTuple);
+        Double confidenceScore = scorer.exec(testTuple);
 
-		assertThat(confidenceScore, greaterThan(0.0));
-	}
+        assertThat(confidenceScore, greaterThan(0.0));
+    }
 
-	@Test
-	public void testExecWithPerceptronReturnsDouble() throws IOException {
-		TupleFactory tupleFactory = TupleFactory.getInstance();
-		ScoreWithPerceptron scorer = new ScoreWithPerceptron();
-		scorer.setConf(CONF);
+    @Test
+    public void testExecWithPerceptronReturnsDouble() throws IOException {
+        TupleFactory tupleFactory = TupleFactory.getInstance();
+        ScoreWithPerceptron scorer = new ScoreWithPerceptron();
+        scorer.setConf(CONF);
 
-		List<Double> list = toDoubleList(DATA);
-		Tuple testTuple = tupleFactory.newTuple(list);
-		assertThat(testTuple.size(), equalTo(FIELDS));
+        List<Double> list = toDoubleList(DATA);
+        Tuple testTuple = tupleFactory.newTuple(list);
+        assertThat(testTuple.size(), equalTo(FIELDS));
 
-		Double confidenceScore = scorer.exec(testTuple);
+        Double confidenceScore = scorer.exec(testTuple);
 
-		assertThat(confidenceScore, greaterThanOrEqualTo(new Double(0.0)));
-	}
+        assertThat(confidenceScore, greaterThanOrEqualTo(new Double(0.0)));
+    }
 
-	@Test
-	public void testWithIncorrectlyFormattedDataShouldThrow()
-			throws IOException {
-		TupleFactory tupleFactory = TupleFactory.getInstance();
-		ScoreWithPerceptron scorer = new ScoreWithPerceptron();
-		scorer.setConf(CONF);
+    @Test
+    public void testWithIncorrectlyFormattedDataShouldThrow() throws IOException {
+        TupleFactory tupleFactory = TupleFactory.getInstance();
+        ScoreWithPerceptron scorer = new ScoreWithPerceptron();
+        scorer.setConf(CONF);
 
-		Tuple testTuple = tupleFactory.newTuple(toDoubleList(BAD_DATA));
-		scorer.exec(testTuple);
-	}
+        Tuple testTuple = tupleFactory.newTuple(toDoubleList(BAD_DATA));
+        scorer.exec(testTuple);
+    }
 
-	@Test
-	public void testPerceptronModelLoadsFromConf() throws IOException {
-		Perceptron p = new Perceptron(CONF);
+    @Test
+    public void testPerceptronModelLoadsFromConf() throws IOException {
+        Perceptron p = new Perceptron(CONF);
 
-		assertThat(p.toString().contains("alpha lengthSquared=300.0"), is(true));
-	}
+        assertThat(p.toString().contains("alpha lengthSquared=300.0"), is(true));
+    }
 
-	private List<Double> toDoubleList(String line) {
-		String[] tokens = line.split(",");
-		return Lists.transform(Arrays.asList(tokens),
-				new Function<String, Double>() {
-					@Override
-					public Double apply(String token) {
-						return Double.parseDouble(token);
-					}
-				});
-	}
+    private List<Double> toDoubleList(String line) {
+        String[] tokens = line.split(",");
+        return Lists.transform(Arrays.asList(tokens), new Function<String, Double>() {
+            @Override
+            public Double apply(String token) {
+                return Double.parseDouble(token);
+            }
+        });
+    }
 }

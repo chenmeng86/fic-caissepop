@@ -8,8 +8,7 @@ import com.fujitsu.ca.fic.caissepop.util.Util;
 import datafu.pig.util.SimpleEvalFunc;
 
 /**
- * Pig UDF that will compute the TF-IDF value from the term frequency, document
- * frequency and document count.
+ * Pig UDF that will compute the TF-IDF value from the term frequency, document frequency and document count.
  * <p>
  * Formula: tf * log (nDocs/df)
  * </p>
@@ -18,14 +17,13 @@ import datafu.pig.util.SimpleEvalFunc;
  * 
  */
 public class ComputeTfIdf extends SimpleEvalFunc<Double> {
-	private static final int PRECISION = 5;
-	private final Logger log = LoggerFactory.getLogger(ComputeTfIdf.class);
+    private static final int PRECISION = 5;
+    private final Logger log = LoggerFactory.getLogger(ComputeTfIdf.class);
 
-	public Double call(Long tfCount, Long nDocs, Long dfCount) {
-		double tfidfScore = tfCount * Math.log(nDocs / (1.0 + dfCount));
-		log.debug(String.format("tfCount: %d nDocs: %d dfCount: %d", tfCount,
-				nDocs, dfCount));
+    public Double call(Long tfCount, Long nDocs, Long dfCount) {
+        double tfidfScore = tfCount * Math.log(nDocs / (1.0 + dfCount));
+        log.debug(String.format("tfCount: %d nDocs: %d dfCount: %d", tfCount, nDocs, dfCount));
 
-		return Util.round(tfidfScore, PRECISION);
-	}
+        return Util.round(tfidfScore, PRECISION);
+    }
 }
