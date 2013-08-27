@@ -17,57 +17,54 @@ import com.google.common.collect.Lists;
 import static org.junit.Assert.assertTrue;
 
 public class TokenizeTextTest {
-	@Test
-	public void testGivenDirectoryWithOneDocShouldReturnTokenizedString()
-			throws IOException, ParseException {
-		String[] params = { "INPUT=data/test/tok1",
-				"OUTPUT=data/out/test/TokenizeText" };
-		PigTest pigTest = new PigTest("pig/tokenize-test.pig", params);
+    @Test
+    public void testGivenDirectoryWithOneDocShouldReturnTokenizedString() throws IOException,
+            ParseException {
+        String[] params = { "INPUT=data/test/tok1", "OUTPUT=data/out/test/TokenizeText" };
+        PigTest pigTest = new PigTest("pig/tokenize-test.pig", params);
 
-		String[] expected = { "(tokenize-1.txt,test)",
-				"(tokenize-1.txt,sentenc)" };
+        String[] expected = { "(tokenize-1.txt,test)", "(tokenize-1.txt,sentenc)" };
 
-		pigTest.assertOutput("out", expected);
-	}
+        pigTest.assertOutput("out", expected);
+    }
 
-	@Test
-	public void givenSimpleSentenceEvalFuncShouldReturnStemmedTokensWithNoStopWords()
-			throws IOException {
-		TokenizeText tokenizeClass = new TokenizeText();
-		Tuple input = TupleFactory.getInstance().newTuple();
-		input.append("This is a test sentence");
+    @Test
+    public void givenSimpleSentenceEvalFuncShouldReturnStemmedTokensWithNoStopWords()
+            throws IOException {
+        TokenizeText tokenizeClass = new TokenizeText();
+        Tuple input = TupleFactory.getInstance().newTuple();
+        input.append("This is a test sentence");
 
-		DataBag tokensBag = tokenizeClass.exec(input);
-		Set<String> tokens = new HashSet<String>();
+        DataBag tokensBag = tokenizeClass.exec(input);
+        Set<String> tokens = new HashSet<String>();
 
-		for (Tuple item : tokensBag) {
-			String token = (String) item.get(0);
-			tokens.add(token);
-		}
+        for (Tuple item : tokensBag) {
+            String token = (String) item.get(0);
+            tokens.add(token);
+        }
 
-		List<String> expected = Lists.newArrayList("test", "sentenc");
-		assertTrue(tokens.containsAll(expected));
-	}
+        List<String> expected = Lists.newArrayList("test", "sentenc");
+        assertTrue(tokens.containsAll(expected));
+    }
 
-	@Test
-	public void givenSimpleSentenceEvalFuncShouldReturnStemmedTokensWithNoStopWords2()
-			throws IOException {
-		TokenizeText tokenizeClass = new TokenizeText();
-		Tuple input = TupleFactory.getInstance().newTuple();
-		input.append("Alberta Environment created the Alberta Environment Support and "
-				+ "Emergency Response Team (ASERT) in 2006.");
+    @Test
+    public void givenSimpleSentenceEvalFuncShouldReturnStemmedTokensWithNoStopWords2()
+            throws IOException {
+        TokenizeText tokenizeClass = new TokenizeText();
+        Tuple input = TupleFactory.getInstance().newTuple();
+        input.append("Alberta Environment created the Alberta Environment Support and "
+                + "Emergency Response Team (ASERT) in 2006.");
 
-		DataBag tokensBag = tokenizeClass.exec(input);
-		List<String> tokens = Lists.newArrayList();
+        DataBag tokensBag = tokenizeClass.exec(input);
+        List<String> tokens = Lists.newArrayList();
 
-		for (Tuple item : tokensBag) {
-			String token = (String) item.get(0);
-			tokens.add(token);
-		}
+        for (Tuple item : tokensBag) {
+            String token = (String) item.get(0);
+            tokens.add(token);
+        }
 
-		List<String> expected = Lists.newArrayList("alberta", "environ",
-				"creat", "alberta", "environ", "support", "emerg", "respons",
-				"team", "asert", "2006");
-		assertTrue(tokens.containsAll(expected));
-	}
+        List<String> expected = Lists.newArrayList("alberta", "environ", "creat", "alberta",
+                "environ", "support", "emerg", "respons", "team", "asert", "2006");
+        assertTrue(tokens.containsAll(expected));
+    }
 }
