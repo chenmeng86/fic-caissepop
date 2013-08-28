@@ -41,6 +41,7 @@
 				<configuration>
 					<instrumentation>
 						<ignores>
+						  <ignore>com.fujitsu.ca.fic.caissepop.util.Util</ignore>
 							<ignore>com.fujitsu.ca.fic.classifier.perceptron.*</ignore>
 						</ignores>
 						<excludes>
